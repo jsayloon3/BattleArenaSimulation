@@ -1,0 +1,11 @@
+{
+  "players": {
+    "warrior": {
+      "name": "",
+      "skills": [],
+      "defenses": [],
+      "messagesWhenWin": [],
+      "messagesWhenDefeat": []
+    }
+  }
+}
