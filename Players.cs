@@ -8,23 +8,31 @@ namespace BattleArenaSimulation
 {
     public class Players
     {
-        public static List<string> List()
-        {
-            var players = new List<string>()
-            {
-                "Luminex",
-                "Sonic Surge",
-                "Nebula Knight",
-                "Tempest Strider",
-                "Aether Sentinel",
-                "Vortex Vanguard",
-                "Celestial Ember",
-                "Chrono Warden",
-                "Galactic Scepter",
-                "Phoenix Nova"
-            };
+        //public static List<string> List()
+        //{
+        //    var players = new List<string>()
+        //    {
+        //        "Luminex",
+        //        "Sonic Surge",
+        //        "Nebula Knight",
+        //        "Tempest Strider",
+        //        "Aether Sentinel",
+        //        "Vortex Vanguard",
+        //        "Celestial Ember",
+        //        "Chrono Warden",
+        //        "Galactic Scepter",
+        //        "Phoenix Nova"
+        //    };
 
-            return players;
+        //    return players;
+        //}
+
+        public class WarriorModel
+        {
+            public string? name { get; set; }
+            public string? gender { get; set; }
+            public List<string>? messages_when_win { get; set; }
+            public List<string>? messages_when_defeated { get; set; }
         }
     }
 }

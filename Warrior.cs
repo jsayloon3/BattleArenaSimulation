@@ -11,8 +11,11 @@ namespace BattleArenaSimulation
         private Random _decisionPicker;
 
         private string _name;
+        private string _gender;
         private int _health;
         private int _maxHealth;
+        private int _totalHPDeducted = 0;
+        private int _totalHPAdded = 0;
         private List<string> _skills;
         private List<string> _defense;
         private List<string> _winningMessages;
@@ -20,30 +23,32 @@ namespace BattleArenaSimulation
 
         private List<string> _defaultSkills = new()
         {
-            "Basic attack",
-            "Swift strike",
-            "Shield bash",
-            "Fireball",
-            "Whirlwind slash",
-            "Thunderbolt",
-            "Frost Nova",
-            "Dragon’s Breath",
-            "Soul Drain",
-            "Ultimate power"
+            "Passive Attack",
+            "Normal Attack",
+            "Magic Attack",
+            "Ranged Attack",
+            "Special Attack",
+            "Combo Attack",
+            "Area of Effect Attack",
+            "Poison Attack",
+            "Sneak Attack",
+            "Elemental Attack",
+            "Heavy attack"
         };
 
         private List<string> _defaultDefense = new()
         {
-            "Ethereal Evasion",
-            "Gravity’s Foe", 
-            "Shadow’s Embrace", 
-            "Time Unwound", 
-            "Dervish Dance", 
-            "Wind-Kissed", 
-            "Flicker of Fate", 
-            "Serpent’s Grace", 
-            "Starfall Leap", 
-            "Destiny’s Whisper"
+            "Passive Defense",
+            "Normal Defense",
+            "Dodge",
+            "Counter",
+            "Magic Shield",
+            "Evasion",
+            "Reflect",
+            "Absorption",
+            "Barrier",
+            "Fortify",
+            "Ultimate Shield"
         };
 
         private List<string> _defaultWinningMessages = new()
@@ -74,9 +79,10 @@ namespace BattleArenaSimulation
             "I’ll learn from this and rise again."
         };
 
-        public Warrior(Random decisionPicker, string name, int health, List<string>? skills = null, List<string>? defense = null, List<string>? winningMessages = null, List<string>? lostInGameMessages = null)
-        { 
+        public Warrior(Random decisionPicker, string name, string gender, int health, List<string>? skills = null, List<string>? defense = null, List<string>? winningMessages = null, List<string>? lostInGameMessages = null)
+        {
             _name = name;
+            _gender = gender;
             _health = health;
             _maxHealth = health;
 
@@ -113,8 +119,13 @@ namespace BattleArenaSimulation
         }
 
         public string GetWarriorName()
-        { 
+        {
             return _name;
+        }
+
+        public string GetWarriorGender()
+        {
+            return _gender.ToLower();
         }
 
         public int GetMaxHealth() 
@@ -129,17 +140,39 @@ namespace BattleArenaSimulation
 
         public string GetSkillUse(int skillLevel)
         {
-            return _skills[skillLevel - 1];
+            return _skills[skillLevel];
         }
 
         public string GetDefenseUse(int defenseLevel)
         {
-            return _defense[defenseLevel - 1];
+            return _defense[defenseLevel];
+        }
+
+        public void HealthRecovery(int heal)
+        {
+            _health += heal;
+            _totalHPAdded = heal;
         }
 
         public void DamageTaken(int hit)
-        { 
+        {
             _health -= hit;
+            _totalHPDeducted =  hit;
+
+            if (_health < 0) _health = 0; 
+        }
+
+        public string GetHPUpdate()
+        {
+            string status = "";
+
+            if (_totalHPDeducted > 0) status = $"(- {_totalHPDeducted})";
+            if (_totalHPAdded > 0) status = $"(+ {_totalHPAdded})";
+
+            _totalHPAdded = 0;
+            _totalHPDeducted = 0;
+
+            return status;
         }
 
         public bool Alive()
@@ -149,12 +182,12 @@ namespace BattleArenaSimulation
 
         public int Attack()
         {
-            return _decisionPicker.Next(1, _skills.Count + 1);
+            return _decisionPicker.Next(_skills.Count);
         }
 
         public int Defend()
         {
-            return _decisionPicker.Next(1, _defense.Count + 1);
+            return _decisionPicker.Next(_defense.Count);
         }
     }
 }

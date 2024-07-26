@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Juan",
+    "gender": "Male",
+    "messages_when_win": [
+      "Message",
+      "Messafe 1"
+    ],
+    "messages_when_defeated": [
+      "Message",
+      "Message 1"
+    ]
+  },
+  {
+    "name": "Anna",
+    "gender": "Female",
+    "messages_when_win": [
+      "Message",
+      "Message 1"
+    ],
+    "messages_when_defeated": [
+      "Message",
+      "Messafe 1"
+    ]
+  }
+]

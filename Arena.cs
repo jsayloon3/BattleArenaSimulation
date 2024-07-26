@@ -75,11 +75,18 @@ namespace BattleArenaSimulation
                     Announcer.Message($"\tFight!", 1000, updateMessage: true, updateMessageAtPosition: 12);
             }
 
-            Announcer.Message($"\tFirst to attack {playerToAttack}", 1000, updateMessage: true, updateMessageAtPosition: 12);
+            Announcer.Message($"\tFirst to attack {playerToAttack}", 1000, updateMessage: true, updateMessageAtPosition: 12, consoleColor: ConsoleColor.DarkYellow);
+
+            //string messageWhenBlockedFromAttack = "\t<> {0} completely blocked {1}'s attack using {2} \"{3}\" defense.";
+            //string messageWhenDodgeFromAttack = "\t<> {0} dodged {1}'s \"{2}\" attack using {3} \"{4}\" defense, but {5} still lost 1 HP";
 
             do
             {
-                if (gameTurn > 0) Announcer.Message($"\t{playerToAttack} Turn", 5000, updateMessage: true, updateMessageAtPosition: 12);
+                if (gameTurn > 0)
+                {
+                    Announcer.Message($"\t{Messages.TurnIndicator(_decisionPicker.Next(4), playerToAttack)}", 15000, updateMessage: true, updateMessageAtPosition: 12, consoleColor: ConsoleColor.DarkYellow);
+                    Announcer.Message(Announcer.RenderPlayerHpInfo($"{_warriorOne.GetHealth()} HP", $"{_warriorTwo.GetHealth()} HP"), 0, updateMessage: true, updateMessageAtPosition: 10);
+                }
 
                 // Clear battle message
                 Announcer.Message(" ", 0, updateMessage: true, updateMessageAtPosition: 13);
@@ -88,21 +95,31 @@ namespace BattleArenaSimulation
                 {
                     int warriorOneAttack = _warriorOne.Attack();
                     int warriorTwoDefend = _warriorTwo.Defend();
+
                     if (warriorOneAttack > warriorTwoDefend)
                     {
-                        Announcer.Message($"\t<> {_warriorOne.GetWarriorName()} attack with a skill \"{_warriorOne.GetSkillUse(warriorOneAttack)}\" worth {warriorOneAttack} HP and {_warriorTwo.GetWarriorName()} was damage", 2000, updateMessage: true, updateMessageAtPosition: 13);
-                        _warriorTwo.DamageTaken(warriorOneAttack);
-                    }
-                    else if (warriorOneAttack == warriorTwoDefend)
-                    {
-                        Announcer.Message($"\t<> {_warriorOne.GetWarriorName()} attack with a skill \"{_warriorOne.GetSkillUse(warriorOneAttack)}\" worth {warriorOneAttack} HP but {_warriorTwo.GetWarriorName()} defended the attack using \"{_warriorTwo.GetDefenseUse(warriorTwoDefend)}\" but still lost 1 HP", 2000, updateMessage: true, updateMessageAtPosition: 13);
-                        _warriorTwo.DamageTaken(1);
+                        Announcer.Message($"\t> {Messages.AttackMessages(warriorOneAttack, _warriorOne, _warriorTwo)}", 2000, updateMessage: true, updateMessageAtPosition: 13);
                     }
                     else
                     {
-                        Announcer.Message($"\t<> {_warriorTwo.GetWarriorName()} totally defended againts the attack of {_warriorOne.GetWarriorName()} using defense \"{_warriorTwo.GetDefenseUse(warriorTwoDefend)}\"", 2000, updateMessage: true, updateMessageAtPosition: 13);
-                        _warriorTwo.DamageTaken(0);
+                        Announcer.Message($"\t> {Messages.DefenseMessages(warriorOneAttack, warriorTwoDefend, _warriorTwo, _warriorOne)}", 2000, updateMessage: true, updateMessageAtPosition: 13);
                     }
+
+                    //if (warriorOneAttack > warriorTwoDefend)
+                    //{
+                    //    Announcer.Message($"\t<> {_warriorOne.GetWarriorName()} attacked with a skill \"{_warriorOne.GetSkillUse(warriorOneAttack)}\" worth {warriorOneAttack} HP and {_warriorTwo.GetWarriorName()} was damaged", 2000, updateMessage: true, updateMessageAtPosition: 13);
+                    //    _warriorTwo.DamageTaken(warriorOneAttack);
+                    //}
+                    //else if (warriorOneAttack == warriorTwoDefend)
+                    //{
+                    //    Announcer.Message(string.Format(messageWhenDodgeFromAttack, _warriorTwo.GetWarriorName(), _warriorOne.GetWarriorName(), _warriorOne.GetSkillUse(warriorOneAttack), Helper.ConvertGenderToPossessivePronoun(_warriorTwo.GetWarriorGender()), _warriorTwo.GetDefenseUse(warriorTwoDefend), Helper.ConvertGenderToGenderedProunoun(_warriorTwo.GetWarriorGender())), 2000, updateMessage: true, updateMessageAtPosition: 13);
+                    //    _warriorTwo.DamageTaken(1);
+                    //}
+                    //else
+                    //{
+                    //    Announcer.Message(string.Format(messageWhenBlockedFromAttack, _warriorTwo.GetWarriorName(), _warriorOne.GetWarriorName(), Helper.ConvertGenderToPossessivePronoun(_warriorTwo.GetWarriorGender()), _warriorTwo.GetDefenseUse(warriorTwoDefend)), 2000, updateMessage: true, updateMessageAtPosition: 13);
+                    //    _warriorTwo.DamageTaken(0);
+                    //}
 
                     playerToAttack = _warriorTwo.GetWarriorName();
                 }
@@ -110,26 +127,36 @@ namespace BattleArenaSimulation
                 {
                     int warriorTwoAttack = _warriorTwo.Attack();
                     int warriorOneDefend = _warriorOne.Defend();
+
                     if (warriorTwoAttack > warriorOneDefend)
                     {
-                        Announcer.Message($"\t<> {_warriorTwo.GetWarriorName()} attack with a skill \"{_warriorTwo.GetSkillUse(warriorTwoAttack)}\" worth {warriorTwoAttack} HP and {_warriorOne.GetWarriorName()} was damage", 2000, updateMessage: true, updateMessageAtPosition: 13);
-                        _warriorOne.DamageTaken(warriorTwoAttack);
-                    }
-                    else if (warriorTwoAttack == warriorOneDefend)
-                    {
-                        Announcer.Message($"\t<> {_warriorTwo.GetWarriorName()} attack with a skill \"{_warriorTwo.GetSkillUse(warriorTwoAttack)}\" worth {warriorTwoAttack} HP but {_warriorOne.GetWarriorName()} manage and defended the attack using \"{_warriorOne.GetDefenseUse(warriorOneDefend)}\" but still lost 1 HP", 2000, updateMessage: true, updateMessageAtPosition: 13);
-                        _warriorOne.DamageTaken(1);
+                        Announcer.Message($"\t> {Messages.AttackMessages(warriorTwoAttack, _warriorTwo, _warriorOne)}", 2000, updateMessage: true, updateMessageAtPosition: 13);
                     }
                     else
                     {
-                        Announcer.Message($"\t<> {_warriorOne.GetWarriorName()} totally defended againts the attack of {_warriorTwo.GetWarriorName()} using defense \"{_warriorOne.GetDefenseUse(warriorOneDefend)}\"", 2000, updateMessage: true, updateMessageAtPosition: 13);
-                        _warriorOne.DamageTaken(0);
+                        Announcer.Message($"\t> {Messages.DefenseMessages(warriorTwoAttack, warriorOneDefend, _warriorOne, _warriorTwo)}", 2000, updateMessage: true, updateMessageAtPosition: 13);
                     }
+
+                    //if (warriorTwoAttack > warriorOneDefend)
+                    //{
+                    //    Announcer.Message($"\t<> {_warriorTwo.GetWarriorName()} attacked with a skill \"{_warriorTwo.GetSkillUse(warriorTwoAttack)}\" worth {warriorTwoAttack} HP and {_warriorOne.GetWarriorName()} was damaged", 2000, updateMessage: true, updateMessageAtPosition: 13);
+                    //    _warriorOne.DamageTaken(warriorTwoAttack);
+                    //}
+                    //else if (warriorTwoAttack == warriorOneDefend)
+                    //{
+                    //    Announcer.Message(string.Format(messageWhenDodgeFromAttack, _warriorOne.GetWarriorName(), _warriorTwo.GetWarriorName(), _warriorTwo.GetSkillUse(warriorTwoAttack), Helper.ConvertGenderToPossessivePronoun(_warriorOne.GetWarriorGender()), _warriorOne.GetDefenseUse(warriorOneDefend), Helper.ConvertGenderToGenderedProunoun(_warriorOne.GetWarriorGender())), 2000, updateMessage: true, updateMessageAtPosition: 13);
+                    //    _warriorOne.DamageTaken(1);
+                    //}
+                    //else
+                    //{
+                    //    Announcer.Message(string.Format(messageWhenBlockedFromAttack, _warriorOne.GetWarriorName(), _warriorTwo.GetWarriorName(), Helper.ConvertGenderToPossessivePronoun(_warriorOne.GetWarriorGender()), _warriorOne.GetDefenseUse(warriorOneDefend)), 2000, updateMessage: true, updateMessageAtPosition: 13);
+                    //    _warriorOne.DamageTaken(0);
+                    //}
 
                     playerToAttack = _warriorOne.GetWarriorName();
                 }
 
-                Announcer.Message(Announcer.RenderPlayerHpInfo($"{_warriorOne.GetHealth()} HP", $"{_warriorTwo.GetHealth()} HP"), 1000, updateMessage: true, updateMessageAtPosition: 10);
+                Announcer.Message(Announcer.RenderPlayerHpInfo($"{_warriorOne.GetHealth()} HP {_warriorOne.GetHPUpdate()}", $"{_warriorTwo.GetHPUpdate()} {_warriorTwo.GetHealth()} HP"), 0, updateMessage: true, updateMessageAtPosition: 10);
 
                 if (!_warriorOne.Alive() || !_warriorTwo.Alive())
                 {
