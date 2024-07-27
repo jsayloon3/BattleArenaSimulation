@@ -77,9 +77,6 @@ namespace BattleArenaSimulation
 
             Announcer.Message($"\tFirst to attack {playerToAttack}", 1000, updateMessage: true, updateMessageAtPosition: 12, consoleColor: ConsoleColor.DarkYellow);
 
-            //string messageWhenBlockedFromAttack = "\t<> {0} completely blocked {1}'s attack using {2} \"{3}\" defense.";
-            //string messageWhenDodgeFromAttack = "\t<> {0} dodged {1}'s \"{2}\" attack using {3} \"{4}\" defense, but {5} still lost 1 HP";
-
             do
             {
                 if (gameTurn > 0)
@@ -105,22 +102,6 @@ namespace BattleArenaSimulation
                         Announcer.Message($"\t> {Messages.DefenseMessages(warriorOneAttack, warriorTwoDefend, _warriorTwo, _warriorOne)}", 2000, updateMessage: true, updateMessageAtPosition: 13);
                     }
 
-                    //if (warriorOneAttack > warriorTwoDefend)
-                    //{
-                    //    Announcer.Message($"\t<> {_warriorOne.GetWarriorName()} attacked with a skill \"{_warriorOne.GetSkillUse(warriorOneAttack)}\" worth {warriorOneAttack} HP and {_warriorTwo.GetWarriorName()} was damaged", 2000, updateMessage: true, updateMessageAtPosition: 13);
-                    //    _warriorTwo.DamageTaken(warriorOneAttack);
-                    //}
-                    //else if (warriorOneAttack == warriorTwoDefend)
-                    //{
-                    //    Announcer.Message(string.Format(messageWhenDodgeFromAttack, _warriorTwo.GetWarriorName(), _warriorOne.GetWarriorName(), _warriorOne.GetSkillUse(warriorOneAttack), Helper.ConvertGenderToPossessivePronoun(_warriorTwo.GetWarriorGender()), _warriorTwo.GetDefenseUse(warriorTwoDefend), Helper.ConvertGenderToGenderedProunoun(_warriorTwo.GetWarriorGender())), 2000, updateMessage: true, updateMessageAtPosition: 13);
-                    //    _warriorTwo.DamageTaken(1);
-                    //}
-                    //else
-                    //{
-                    //    Announcer.Message(string.Format(messageWhenBlockedFromAttack, _warriorTwo.GetWarriorName(), _warriorOne.GetWarriorName(), Helper.ConvertGenderToPossessivePronoun(_warriorTwo.GetWarriorGender()), _warriorTwo.GetDefenseUse(warriorTwoDefend)), 2000, updateMessage: true, updateMessageAtPosition: 13);
-                    //    _warriorTwo.DamageTaken(0);
-                    //}
-
                     playerToAttack = _warriorTwo.GetWarriorName();
                 }
                 else
@@ -136,22 +117,6 @@ namespace BattleArenaSimulation
                     {
                         Announcer.Message($"\t> {Messages.DefenseMessages(warriorTwoAttack, warriorOneDefend, _warriorOne, _warriorTwo)}", 2000, updateMessage: true, updateMessageAtPosition: 13);
                     }
-
-                    //if (warriorTwoAttack > warriorOneDefend)
-                    //{
-                    //    Announcer.Message($"\t<> {_warriorTwo.GetWarriorName()} attacked with a skill \"{_warriorTwo.GetSkillUse(warriorTwoAttack)}\" worth {warriorTwoAttack} HP and {_warriorOne.GetWarriorName()} was damaged", 2000, updateMessage: true, updateMessageAtPosition: 13);
-                    //    _warriorOne.DamageTaken(warriorTwoAttack);
-                    //}
-                    //else if (warriorTwoAttack == warriorOneDefend)
-                    //{
-                    //    Announcer.Message(string.Format(messageWhenDodgeFromAttack, _warriorOne.GetWarriorName(), _warriorTwo.GetWarriorName(), _warriorTwo.GetSkillUse(warriorTwoAttack), Helper.ConvertGenderToPossessivePronoun(_warriorOne.GetWarriorGender()), _warriorOne.GetDefenseUse(warriorOneDefend), Helper.ConvertGenderToGenderedProunoun(_warriorOne.GetWarriorGender())), 2000, updateMessage: true, updateMessageAtPosition: 13);
-                    //    _warriorOne.DamageTaken(1);
-                    //}
-                    //else
-                    //{
-                    //    Announcer.Message(string.Format(messageWhenBlockedFromAttack, _warriorOne.GetWarriorName(), _warriorTwo.GetWarriorName(), Helper.ConvertGenderToPossessivePronoun(_warriorOne.GetWarriorGender()), _warriorOne.GetDefenseUse(warriorOneDefend)), 2000, updateMessage: true, updateMessageAtPosition: 13);
-                    //    _warriorOne.DamageTaken(0);
-                    //}
 
                     playerToAttack = _warriorOne.GetWarriorName();
                 }
