@@ -47,7 +47,7 @@ if (players.Count > 1)
     // Game round place holder
     Announcer.Message("\n", 1000);
 
-    // Players turn place holder
+    // Players turn indicator place holder
     Announcer.Message("\n", 0);
     Announcer.Message("\n", 0);
 
@@ -58,7 +58,7 @@ if (players.Count > 1)
     Announcer.Message("\n", 0);
     Announcer.Message("", 0);
 
-    // Iliminated player place holder
+    // Eliminated player place holder
     Announcer.Message("\n", 0);
     Announcer.Message("", 0);
 
@@ -126,6 +126,10 @@ if (players.Count > 1)
             gameRound += 1;
         }
     }
+}
+else
+{
+    Console.WriteLine("Please add players in warriors.json file");
 }
 
 Console.ReadLine();
